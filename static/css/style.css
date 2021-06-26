@@ -3,7 +3,7 @@
 }
 
 .Main_Header {
-    background-color: #F3E9F4;
+    background-color: whitesmoke;
     height: 15rem;
     line-height: 15rem;
     justify-content: center;
@@ -17,5 +17,21 @@
 }
 
 .Navigator_Main {
-    background-color: #D1EAE9;
+    background-color: #91a8c2;
+}
+
+.Kategori_List {
+    height: 5rem;
+    line-height: 5rem;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.Kategori_List div {
+    padding: 0.28rem;
+
 }
