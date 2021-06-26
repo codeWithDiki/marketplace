@@ -25,4 +25,5 @@ router.register(r'product', views.ProductViewset)
 urlpatterns = [
     path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
+    path('', views.LandingPage.as_view())
 ]

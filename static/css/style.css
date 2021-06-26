@@ -1,0 +1,21 @@
+.Main_Style {
+    background-color: #E4E4E4;
+}
+
+.Main_Header {
+    background-color: #F3E9F4;
+    height: 15rem;
+    line-height: 15rem;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    display: flex;
+}
+
+.Main_Header h1 {
+    text-shadow: 0 0 3px black;
+}
+
+.Navigator_Main {
+    background-color: #D1EAE9;
+}
