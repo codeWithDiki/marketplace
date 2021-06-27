@@ -15,7 +15,7 @@ class Products(models.Model):
     product_owner = models.CharField(max_length=25, editable=False, blank=False)
     product_stock = models.IntegerField(blank=False)
     product_rating = models.FloatField(editable=False, blank=True, null=True)
-    product_media = models.JSONField(blank=True, editable=False, null=True)
+    product_media = models.JSONField(blank=True, null=True)
     product_slugify = models.SlugField(editable=False)
 
     def __str__(self):
@@ -67,9 +67,6 @@ class Discount(models.Model):
     description = models.TextField(blank=False)
     discount = models.FloatField(blank=False)
 
-class ProductImages(models.Model):
-    product = models.ForeignKey(Products, related_name='product_images', on_delete=models.CASCADE)
-    images = models.ImageField()
 
     
 

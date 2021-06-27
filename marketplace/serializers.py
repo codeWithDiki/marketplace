@@ -5,4 +5,5 @@ from products.models import Products
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Products
-        fields = ['url', 'product_name', 'product_description', 'product_stock', 'product_images']
+        fields = ['url', 'product_name', 'product_description', 'product_stock', 'product_media']
+        read_only_fields = ['product_media']

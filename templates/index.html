@@ -13,7 +13,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-center align-items-center">
                     <div class="flex-fill">
-                        <span class="fas fa-folder"></span>
+                        <span class="fas fa-tags"></span>
                     </div>
                     <div>
                         <h6>Category</h6>
@@ -22,7 +22,7 @@
                 <hr>
                 <div class="list-group list-group-flush bg-light">
                     {% for cat in category %}
-                    <a class="list-group-item">{{cat.name}}</a>
+                    <a class="list-group-item"><span class="fas fa-tag"></span> {{cat.name}}</a>
                     {% endfor %}
                 </div>
             </div>    
@@ -70,7 +70,7 @@
         </div>
         {% for key,value in product_in_category %}
         <br>
-            <h6><span class="fas fa-folder"></span> {{key}}</h6>
+            <h6><span class="fas fa-tag"></span> {{key}}</h6>
         <hr>
         <div class="container">
             <div class="row">
@@ -97,13 +97,19 @@
                         </li>
                     </ul>
                     <div class="card-footer d-flex justify-content-center align-items-center">
-                    <div>
-                        <a href="#" class="btn btn-sm btn-success">View Product</a>
-                    </div>
+                        <div>
+                            <a href="#" class="btn btn-sm btn-outline-success"><span class="fas fa-eye"></span> View Product</a>
+                        </div>
                     </div>
                 </div>
             </div>
             {% endfor %}
+            </div>
+        </div>
+        <br>
+        <div class="d-flex justify-content-center align-items-center">
+            <div>
+                <h6><a href="#" class="btn btn-sm btn-outline-primary"><span class="fas fa-grip-horizontal"></span> See All Products on {{key}}</a></h6>
             </div>
         </div>
         {% endfor %}

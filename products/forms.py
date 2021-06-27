@@ -10,7 +10,7 @@ class FormProduct(forms.ModelForm):
             "product_category",
             "product_price",
             "product_stock",
-            "product_images"
+            "product_media"
         ]
 
         widgets = {
@@ -22,28 +22,29 @@ class FormProduct(forms.ModelForm):
                 'class' : 'form-control form-control-sm',
                 'placeholder' : 'Product Description ...'
             }),
-            "product_price" : forms.IntegerField(attrs = {
+            "product_price" : forms.NumberInput(attrs = {
                 'class' : 'form-control form-control-sm',
                 'placeholder' : 'Product Price..'
             }),
-            "product_stock" : forms.IntegerField(attrs = {
+            "product_stock" : forms.NumberInput(attrs = {
                 'class' : 'form-control form-control-sm',
                 'placeholder' : 'Product Stock...'
             }),
-            "product_images" : forms.ImageField(attrs={
+            "product_media" : forms.FileInput(attrs={
                 "class" : "form-control form-control-sm",
                 "multiple" : True
             })
         }
 
     def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         categories = Category.objects.values()
         catInputs = [[cat["id"], cat["name"]] for cat in categories]
 
         self.fields['product_category'] = forms.ChoiceField(choices = catInputs)
         self.fields['product_category'].widget.attrs.update({'class': 'form-control form-control-sm'})
 
-        return super().__init__(args, kwargs)
+        
 
 class FormCategory(forms.ModelForm):
     class Meta:
@@ -77,7 +78,7 @@ class FormRating(forms.ModelForm):
                 "class" : "form-control form-control-sm",
                 "placeholder" : "Comments"
             }),
-            "rate" : forms.FloatField(attrs = {
+            "rate" : forms.NumberInput(attrs = {
                 "class" : "form-control form-control-sm",
                 "placeholder" : "Rate 1-5..."
             })
@@ -87,7 +88,6 @@ class FormDiscount(forms.ModelForm):
     class Meta:
         model = Discount
         fields = [
-            "products",
             "name",
             "description",
             "discount"
@@ -102,7 +102,7 @@ class FormDiscount(forms.ModelForm):
                 "class" : "form-control form-control-sm",
                 "placeholder" : "Discount Description..."
             }),
-            "discount" : forms.FloatField(attrs = {
+            "discount" : forms.NumberInput(attrs = {
                 "class" : "form-control form-control-sm",
                 "placeholder" : "Discount Percent..."
             })

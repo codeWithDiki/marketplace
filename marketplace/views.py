@@ -3,6 +3,7 @@ from products.models import Products
 from .serializers import *
 from django.views.generic import TemplateView
 from products.models import *
+from products.forms import *
 from django.conf import settings
 
 class ProductViewset(viewsets.ModelViewSet):
