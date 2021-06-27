@@ -9,7 +9,8 @@ class FormProduct(forms.ModelForm):
             "product_description",
             "product_category",
             "product_price",
-            "product_stock"
+            "product_stock",
+            "product_images"
         ]
 
         widgets = {
@@ -28,6 +29,10 @@ class FormProduct(forms.ModelForm):
             "product_stock" : forms.IntegerField(attrs = {
                 'class' : 'form-control form-control-sm',
                 'placeholder' : 'Product Stock...'
+            }),
+            "product_images" : forms.ImageField(attrs={
+                "class" : "form-control form-control-sm",
+                "multiple" : True
             })
         }
 

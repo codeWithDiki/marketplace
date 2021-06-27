@@ -54,12 +54,22 @@ class Rating(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=25, blank=False)
     description = models.TextField(blank=False)
+    slug = models.SlugField(editable=False, blank=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+
+        return super().save(args, kwargs)
 
 class Discount(models.Model):
     product = models.IntegerField(blank = False, editable=False)
     name = models.CharField(max_length=25, blank=False)
     description = models.TextField(blank=False)
     discount = models.FloatField(blank=False)
+
+class ProductImages(models.Model):
+    product = models.ForeignKey(Products, related_name='product_images', on_delete=models.CASCADE)
+    images = models.ImageField()
 
     
 
