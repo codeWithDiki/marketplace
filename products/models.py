@@ -14,8 +14,8 @@ class Products(models.Model):
     product_updated = models.DateTimeField(auto_now=True)
     product_owner = models.CharField(max_length=25, editable=False, blank=False)
     product_stock = models.IntegerField(blank=False)
-    product_rating = models.FloatField(editable=False)
-    product_media = models.JSONField(blank=True, editable=False)
+    product_rating = models.FloatField(editable=False, blank=True, null=True)
+    product_media = models.JSONField(blank=True, editable=False, null=True)
     product_slugify = models.SlugField(editable=False)
 
     def __str__(self):

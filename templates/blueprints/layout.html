@@ -12,10 +12,12 @@
     <link rel="stylesheet" href="{% static 'js/jquery-ui/jquery-ui.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/fontawesome/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
     <script src="{% static 'js/ajax.js' %}"></script>
     <script src="{% static 'js/jquery-ui/jquery-ui.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/fontawesome/all.min.js' %}" defer></script>
+    <script src="{% static 'js/aos.js' %}"></script>
 </head>
 <body class="Main_Style">
     <nav class="navbar navbar-expand-sm sticky-top shadow navbar-dark bg-dark">
@@ -71,4 +73,7 @@
             </div>
         </div>
 </body>
+<script>
+    AOS.init()
+</script>
 </html>
