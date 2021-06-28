@@ -1,37 +1,60 @@
-{% extends 'blueprints/layout.html'%}
+{% extends 'blueprints/layout.html' %}
 {% load static %}
-
 {% block title %}
-{{webName}}
+{{object.product_name|title}}
 {% endblock title %}
 
 {% block tagline %}
-{{webName}}
+{{object.product_name|title}}
 {% endblock tagline %}
 
 {% block content %}
 <div class="d-flex mt-3">
-    <div class="p-2 w-25">
+    <div class="p-2 w-25" data-aos="zoom-in">
         <div class="card text-dark bg-light">
             <div class="card-body">
                 <div class="d-flex justify-content-center align-items-center">
                     <div class="flex-fill">
-                        <span class="fas fa-tags"></span>
+                        <span class="fas fa-file-alt"></span>
                     </div>
                     <div>
-                        <h6>Category</h6>
+                        <h6>Product Detail</h6>
                     </div>
                 </div>
                 <hr>
-                <div class="list-group list-group-flush bg-light">
-                    {% for cat in category %}
-                    <a class="list-group-item"><span class="fas fa-tag"></span> {{cat.name}}</a>
-                    {% endfor %}
-                </div>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Price</th>
+                            <td> : </td>
+                            <td class="text-success"> <span class="fas fa-dollar-sign"></span>{{object.product_price}}</td>
+                        </tr>
+                        <tr>
+                            <th>Available</th>
+                            <td> : </td>
+                            <td class="{% if object.product_stock > 10 %}text-success{% else %}text-danger{% endif %}">{{object.product_stock}}</td>
+                        </tr>
+                        <tr>
+                            <th>Created</th>
+                            <td> : </td>
+                            <td>{{object.product_created}}</td>
+                        </tr>
+                        <tr>
+                            <th>Updated</th>
+                            <td> : </td>
+                            <td>{{object.product_updated}}</td>
+                        </tr>
+                        <tr>
+                            <th>Rating</th>
+                            <td> : </td>
+                            <td>{{object.product_rating}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>    
         </div>
     </div>
-    <div class="p-2 flex-fill">
+    <div class="p-2 flex-fill" data-aos="zoom-in">
         <div class="card text-dark bg-light">
             <div class="card-body p-0" style="height: 20rem;">
                 <div id="carouselExampleIndicators" class="carousel slide h-100" data-bs-ride="carousel">
@@ -71,51 +94,24 @@
                   </div>
             </div>    
         </div>
-        {% for key,value in product_in_category %}
-        <br>
-            <h6><span class="fas fa-tag"></span> {{key}}</h6>
-        <hr>
-        <div class="container">
-            <div class="row">
-            {% for product in value %}
-            <div class="col-md-3 pt-2">
-                <div class="card h-100 shadow position-relative" data-aos="zoom-in"
-                data-aos-easing="linear">
-                    <img src="{% static 'media/example/1.jpg' %}" class="card-img-top" alt="..." style="max-height:150px;">
-                    <div class="card-body">
-                    <h5 class="card-title">{{product.name}}</h5>
+        <div class="card mt-2 shadow" data-aos="zoom-in">
+            <h4 class="m-1">Description : </h4>
+            <div class="card-body">
+                {{object.product_description}}
+            </div>
+            <div class="card-footer p-0" align="center">
+                <div class="row align-items-center w-100" style="height: 3rem;">
+                    <div class="col">
+                        <a href="#" class="w-100 text-decoration-none text-dark"><span class="fas fa-star text-warning shadow"></span> 
+                            Add To Favorit</a>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <div>Stock : </div>
-                            <span class="text-success">{{product.stock}}</span>
-                        </li>
-                        <li class="list-group-item">
-                            <div>Price : </div>
-                            <span class="text-success"> <span class="fas fa-dollar-sign"></span>{{product.price}}</span>
-                        </li>
-                        <li class="list-group-item">
-                            <div>Category : </div>
-                            {% for category in product.category %} {{category}} {% endfor %}
-                        </li>
-                    </ul>
-                    <div class="card-footer d-flex justify-content-center align-items-center">
-                        <div>
-                            <a href="{% url 'product_detail' pk=product.pk slug=product.slug %}" class="btn btn-sm btn-outline-success"><span class="fas fa-eye"></span> View Product</a>
-                        </div>
+                    <div class="col">
+                        <a href="#" class="w-100 text-decoration-none text-dark"><span class="fas fa-cart-plus text-success"></span>
+                            Buy</a>
                     </div>
                 </div>
             </div>
-            {% endfor %}
-            </div>
         </div>
-        <br>
-        <div class="d-flex justify-content-center align-items-center">
-            <div>
-                <h6><a href="#" class="btn btn-sm btn-outline-primary"><span class="fas fa-grip-horizontal"></span> See All Products on {{key}}</a></h6>
-            </div>
-        </div>
-        {% endfor %}
     </div>
 </div>
 {% endblock content %}

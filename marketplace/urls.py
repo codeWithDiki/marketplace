@@ -23,6 +23,7 @@ router = routers.DefaultRouter()
 router.register(r'product', views.ProductViewset)
 
 urlpatterns = [
+    path('product/<int:pk>/<slug:slug>', views.ProductDetailView.as_view(template_name='products/index.html'), name="product_detail"),
     path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
     path('', views.LandingPage.as_view())

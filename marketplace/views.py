@@ -1,10 +1,12 @@
 from rest_framework import viewsets
 from products.models import Products
 from .serializers import *
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView, detail
 from products.models import *
 from products.forms import *
 from django.conf import settings
+
+
 
 class ProductViewset(viewsets.ModelViewSet):
     queryset = Products.objects.all()
@@ -41,9 +43,11 @@ class LandingPage(TemplateView):
                 products = Products.objects.all()
                 for product in products:
                     product_item = {
+                        "pk"        : product.id,
                         "name"      : product.product_name,
                         "stock"     : product.product_stock,
                         "price"     : product.product_price,
+                        "slug"      : product.product_slugify,
                         "category"  : []
                     }
 
@@ -66,3 +70,35 @@ class LandingPage(TemplateView):
             "product_in_category" : product_in_category.items()
         }
         return super().get_context_data(**kwargs)
+
+class ProductDetailView(DetailView):
+    model = Products
+    slug_field = 'product_slugify'
+
+    def get_object(self, queryset=None):
+        
+        if queryset != None:
+            queryset = self.get_queryset()
+
+        pk = self.kwargs.get(self.pk_url_kwarg)
+        slug = self.kwargs.get(self.slug_url_kwarg)
+
+        if pk != None :
+            queryset = queryset.filter(pk=pk)
+        
+        if slug != None and (pk is None or self.query_pk_and_slug):
+            slug_field = self.get_slug_field()
+            queryset = queryset.filter(**{slug_field: slug})
+        
+        if pk == None and slug == None:
+            raise AttributeError(
+                "Generic detail view %s must be called with either an object "
+                "pk or a slug in the URLconf." % self.__class__.__name__
+            )
+        
+        try:
+        # Get the single item from the filtered queryset
+            obj = queryset.get()
+        except queryset.model.DoesNotExist:
+            raise Http404(_("No %(verbose_name)s found matching the query") %
+                        {'verbose_name': queryset.model._meta.verbose_name})

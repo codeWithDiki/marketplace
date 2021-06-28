@@ -6,24 +6,25 @@ import re
 # Create your models here.
 
 class Products(models.Model):
-    product_name = models.CharField(max_length=50, blank=False)
+    product_name        = models.CharField(max_length=50, blank=False)
     product_description = models.TextField(default="My Product", blank=False)
-    product_price = models.FloatField(blank=False)
-    product_category = models.JSONField(blank=False)
-    product_created = models.DateTimeField(auto_now_add=True)
-    product_updated = models.DateTimeField(auto_now=True)
-    product_owner = models.CharField(max_length=25, editable=False, blank=False)
-    product_stock = models.IntegerField(blank=False)
-    product_rating = models.FloatField(editable=False, blank=True, null=True)
-    product_media = models.JSONField(blank=True, null=True)
-    product_slugify = models.SlugField(editable=False)
+    product_price       = models.FloatField(blank=False)
+    product_category    = models.JSONField(blank=False)
+    product_created     = models.DateTimeField(auto_now_add=True)
+    product_updated     = models.DateTimeField(auto_now=True)
+    product_owner       = models.CharField(max_length=25, editable=False, blank=False)
+    product_stock       = models.IntegerField(blank=False)
+    product_rating      = models.FloatField(editable=False, blank=True, null=True)
+    product_media       = models.JSONField(blank=True, null=True)
+    product_slugify     = models.SlugField(editable=False)
+    product_condition   = models.CharField(blank=True, max_length=50)
+    product_type        = models.CharField(blank=True, max_length=50)
 
     def __str__(self):
         return "{}".format(self.product_name)
 
     def save(self, *args, **kwargs):
         self.product_slugify = slugify(self.product_name)
-        
         return super().save(*args, **kwargs)
 
 
