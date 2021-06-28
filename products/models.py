@@ -45,9 +45,21 @@ class Rating(models.Model):
     def save(self, *args, **kwargs):
         product = Products.objects.get(id=self.product)
         rating = Rating.objects.filter(product=self.product).values("rate")
-        rating.append(self.rate)
-        average = sum(rating) / len(rating)
-        product.update({"product_rating" : float(average)})
+        
+        rate_list = []
+
+        for rate in rating:
+            rate_list.append(rate["rate"])
+
+
+        rate_list.append(self.rate)
+
+        if len(rate_list) is not 0:
+            average = sum(rate_list) / len(rate_list)
+        else:
+            average = self.rate
+        
+        product.product_rating = average
         product.save()
         return super().save(*args, **kwargs)
 

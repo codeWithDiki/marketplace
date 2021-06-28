@@ -47,7 +47,7 @@
                         <tr>
                             <th>Rating</th>
                             <td> : </td>
-                            <td>{{object.product_rating}}</td>
+                            <td>{% for i in range %} {{i}} {% if i < object.product_range.index %} <span class="fas fa-star text-warning"></span> {%endif%}{%endfor%}</td>
                         </tr>
                     </tbody>
                 </table>

@@ -5,7 +5,13 @@ from django.views.generic import TemplateView, DetailView, detail
 from products.models import *
 from products.forms import *
 from django.conf import settings
+from django import template
 
+register = template.Library()
+
+@register.filter(name='range')
+def range(min=5):
+    return range(min)
 
 
 class ProductViewset(viewsets.ModelViewSet):
@@ -76,29 +82,46 @@ class ProductDetailView(DetailView):
     slug_field = 'product_slugify'
 
     def get_object(self, queryset=None):
-        
-        if queryset != None:
+        """
+        Return the object the view is displaying.
+        Require `self.queryset` and a `pk` or `slug` argument in the URLconf.
+        Subclasses can override this to return any object.
+        """
+        # Use a custom queryset if provided; this is required for subclasses
+        # like DateDetailView
+        if queryset is None:
             queryset = self.get_queryset()
-
+        # Next, try looking up by primary key.
         pk = self.kwargs.get(self.pk_url_kwarg)
         slug = self.kwargs.get(self.slug_url_kwarg)
-
-        if pk != None :
+        if pk is not None:
             queryset = queryset.filter(pk=pk)
-        
-        if slug != None and (pk is None or self.query_pk_and_slug):
+        # Next, try looking up by slug.
+        if slug is not None and (pk is None or self.query_pk_and_slug):
             slug_field = self.get_slug_field()
             queryset = queryset.filter(**{slug_field: slug})
-        
-        if pk == None and slug == None:
+        # If none of those are defined, it's an error.
+        if pk is None and slug is None:
             raise AttributeError(
                 "Generic detail view %s must be called with either an object "
                 "pk or a slug in the URLconf." % self.__class__.__name__
             )
-        
         try:
-        # Get the single item from the filtered queryset
+            # Get the single item from the filtered queryset
             obj = queryset.get()
         except queryset.model.DoesNotExist:
             raise Http404(_("No %(verbose_name)s found matching the query") %
                         {'verbose_name': queryset.model._meta.verbose_name})
+        
+        if obj.product_rating is not None:
+            temp = str(obj.product_rating).split(".")
+            sort = {}
+
+            sort["index"] = temp[0]
+            sort["half"] = temp[1]
+            sort["by"] = len(Rating.objects.filter(product=obj.id))
+
+            obj.product_rating = sort
+
+
+        return obj
