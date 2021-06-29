@@ -117,7 +117,7 @@ class ProductDetailView(DetailView):
             sort["half"] = int(temp[1])
             sort["by"] = len(Rating.objects.filter(product=obj.id))
             sort["full_rate"] = "{}.{}".format(str(temp[0]), str(temp[1])[:2])
-            sort["comments"] = Rating.objects.filter(product=obj.id)
+            sort["comments"] = Rating.objects.filter(product=obj.id)[:10]
 
             obj.product_rating = sort
 

@@ -35,9 +35,10 @@ class Products(models.Model):
 
 class Rating(models.Model):
     product = models.IntegerField(blank=False)
-    comments = models.TextField(default="Good Item!")
+    comments = models.TextField(null=False)
     rate = models.FloatField(blank=False)
     rater = models.TextField(blank=False, max_length=25)
+    given_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return "Product ID :{}".format(self.product)

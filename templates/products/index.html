@@ -40,9 +40,9 @@
                             <td>{{object.product_created}}</td>
                         </tr>
                         <tr>
-                            <th>Updated</th>
+                            <th>Product Owner</th>
                             <td> : </td>
-                            <td>{{object.product_updated}}</td>
+                            <td>{{object.product_owner}}</td>
                         </tr>
                         <tr>
                             <th>Rating</th>
@@ -133,14 +133,41 @@
                 </div>
             </div>
         </div>
-        <div class="card mt-2 shadow">
-            {% if object.product_rating != None %}
-                {% for comment in object.product_rating.comments %}
-                <div>{{comment.comments}}</div>
-                {% endfor %}
-            {% else %}
-                <i>No Comment</i>
-            {% endif %}
+        <div class="card mt-2 shadow" data-aos="zoom-in">
+            <h4 class="m-1"> Reviews : </h4>
+            <div class="card-body">
+                {% if object.product_rating != None %}
+                    {% for comment in object.product_rating.comments %}
+                    <hr>
+                    <div class="d-flex" data-aos="zoom-in">
+                        <div class="m-1">
+                            <h1 class="text-info disabled">
+                                <span class="fas fa-user-circle"></span>
+                            </h1>
+                        </div>
+                        <div class="flex-fill m-1">
+                            <h6>{{comment.rater}}</h6>
+                            <hr>
+                            <p>
+                                <small>
+                                    <i>
+                                    <span class="fas fa-quote-left"></span> 
+                                        {{comment.comments}}
+                                    <span class="fas fa-quote-right"></span>
+                                    </i> 
+                                </small>
+                            </p>
+                            <hr>
+                            <div>
+                                <small>Rating given : {{comment.rate}}, on <span class="badge bg-info text-dark">{{comment.given_on}}</span> </small>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <i>No Review</i>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>
