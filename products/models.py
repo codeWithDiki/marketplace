@@ -37,7 +37,7 @@ class Rating(models.Model):
     product = models.IntegerField(blank=False)
     comments = models.TextField(null=False)
     rate = models.FloatField(blank=False)
-    rater = models.TextField(blank=False, max_length=25)
+    rater = models.IntegerField(blank=False)
     given_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -80,6 +80,8 @@ class Discount(models.Model):
     name = models.CharField(max_length=25, blank=False)
     description = models.TextField(blank=False)
     discount = models.FloatField(blank=False)
+    minimum_buy = models.IntegerField()
+
 
 
     

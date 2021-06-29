@@ -13,18 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django import urls
+
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from . import views
+from . import views as root_views
 
 router = routers.DefaultRouter()
-router.register(r'product', views.ProductViewset)
+router.register(r'products', root_views.ProductViewset)
 
 urlpatterns = [
-    path('product/<int:pk>/<slug:slug>', views.ProductDetailView.as_view(template_name='products/index.html'), name="product_detail"),
+    path('products/', include(('products.urls', 'products'))),
     path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('', views.LandingPage.as_view())
+    path('', root_views.LandingPage.as_view())
 ]
