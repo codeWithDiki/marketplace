@@ -5,13 +5,8 @@ from django.views.generic import TemplateView, DetailView, detail
 from products.models import *
 from products.forms import *
 from django.conf import settings
-from django import template
+from django.http import HttpResponse, Http404
 
-register = template.Library()
-
-@register.filter(name='range')
-def range(min=5):
-    return range(min)
 
 
 class ProductViewset(viewsets.ModelViewSet):
@@ -110,16 +105,19 @@ class ProductDetailView(DetailView):
             # Get the single item from the filtered queryset
             obj = queryset.get()
         except queryset.model.DoesNotExist:
-            raise Http404(_("No %(verbose_name)s found matching the query") %
+            raise Http404(("No %(verbose_name)s found matching the query") %
                         {'verbose_name': queryset.model._meta.verbose_name})
         
         if obj.product_rating is not None:
             temp = str(obj.product_rating).split(".")
             sort = {}
 
-            sort["index"] = temp[0]
-            sort["half"] = temp[1]
+            sort["range"] = range(0, 5)
+            sort["index"] = int(temp[0])
+            sort["half"] = int(temp[1])
             sort["by"] = len(Rating.objects.filter(product=obj.id))
+            sort["full_rate"] = "{}.{}".format(str(temp[0]), str(temp[1])[:2])
+            sort["comments"] = Rating.objects.filter(product=obj.id)
 
             obj.product_rating = sort
 

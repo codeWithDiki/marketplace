@@ -9,8 +9,8 @@
 {% endblock tagline %}
 
 {% block content %}
-<div class="d-flex mt-3">
-    <div class="p-2 w-25" data-aos="zoom-in">
+<div class="row w-100 mt-3 m-0">
+    <div class="col-md-3 p-1" data-aos="zoom-in">
         <div class="card text-dark bg-light">
             <div class="card-body">
                 <div class="d-flex justify-content-center align-items-center">
@@ -47,14 +47,35 @@
                         <tr>
                             <th>Rating</th>
                             <td> : </td>
-                            <td>{% for i in range %} {{i}} {% if i < object.product_range.index %} <span class="fas fa-star text-warning"></span> {%endif%}{%endfor%}</td>
+                                {% if object.product_rating != None %}
+                                    <td title="This product got {{object.product_rating.full_rate}} rating from {{object.product_rating.by}} reviews by buyers">
+                                    {% for i in object.product_rating.range %}
+                                        {% if i < object.product_rating.index %}
+                                        <span class="fas fa-star text-warning"></span>
+                                        {% elif i == object.product_rating.index %}
+                                            {% if object.product_rating.half < 5 %}
+                                                <span class="far fa-star text-warning"></span>
+                                            {% else %}
+                                                <span class="fas fa-star-half-alt text-warning"></span>
+                                            {% endif %}
+                                        {% else %}
+                                        <span class="far fa-star text-warning"></span>
+                                        {%endif%}
+                                    {%endfor%}
+                                    <div>{{object.product_rating.full_rate}} ({{object.product_rating.by}})</div>
+                                    </td>
+                                {% else %}
+                                <td>
+                                    Empty
+                                </td>
+                                {% endif %}
                         </tr>
                     </tbody>
                 </table>
             </div>    
         </div>
     </div>
-    <div class="p-2 flex-fill" data-aos="zoom-in">
+    <div class="p-1 col-md-9" data-aos="zoom-in">
         <div class="card text-dark bg-light">
             <div class="card-body p-0" style="height: 20rem;">
                 <div id="carouselExampleIndicators" class="carousel slide h-100" data-bs-ride="carousel">
@@ -111,6 +132,15 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="card mt-2 shadow">
+            {% if object.product_rating != None %}
+                {% for comment in object.product_rating.comments %}
+                <div>{{comment.comments}}</div>
+                {% endfor %}
+            {% else %}
+                <i>No Comment</i>
+            {% endif %}
         </div>
     </div>
 </div>
