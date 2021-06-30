@@ -1,0 +1,58 @@
+{% extends 'blueprints/layout.html' %}
+{% load static %}
+
+
+{% block title %}
+    {{current_category.name}}
+{% endblock title %}
+
+
+{% block tagline %}
+    {{current_category.name}}
+{% endblock tagline %}
+    
+    
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-9 p-3">
+            <div class="container">
+                <div class="row">
+                {% for product in object_list %}
+                <div class="col-md-3 pt-2">
+                    <div class="card h-100 shadow position-relative" data-aos="zoom-in"
+                    data-aos-easing="linear">
+                        <img src="{% static 'media/example/1.jpg' %}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                        <h5 class="card-title">{{product.product_name}}</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <div>Stock : </div>
+                                <span class="text-success">{{product.product_stock}}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <div>Price : </div>
+                                <span class="text-success"> <span class="fas fa-dollar-sign"></span>{{product.product_price}}</span>
+                            </li>
+                        </ul>
+                        <div class="card-footer d-flex justify-content-center align-items-center">
+                            <div>
+                                <a href="{% url 'products:product_detail' pk=product.id slug=product.product_slugify %}" class="btn btn-sm btn-outline-success"><span class="fas fa-eye"></span> View Product</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                </div>
+            </div>
+                
+        </div>
+        <div class="col-md-3 p-3">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero pariatur et suscipit molestias delectus corrupti odio fugit ipsum facilis voluptates sed molestiae similique quibusdam magnam accusantium consequatur natus, numquam sapiente!
+        </div>
+    </div>
+</div>
+{% endblock content %}
+    

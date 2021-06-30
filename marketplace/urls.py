@@ -26,5 +26,5 @@ urlpatterns = [
     path('products/', include(('products.urls', 'products'))),
     path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('', root_views.LandingPage.as_view())
+    path('', root_views.LandingPage.as_view(), name = "home_root")
 ]
