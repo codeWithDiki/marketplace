@@ -74,10 +74,6 @@
                             <div>Price : </div>
                             <span class="text-success"> <span class="fas fa-dollar-sign"></span>{{product.price}}</span>
                         </li>
-                        <li class="list-group-item">
-                            <div>Category : </div>
-                            {% for category in product.category %} {{category}} {% endfor %}
-                        </li>
                     </ul>
                     <div class="card-footer d-flex justify-content-center align-items-center">
                         <div>
@@ -92,7 +88,7 @@
         <br>
         <div class="d-flex justify-content-center align-items-center">
             <div>
-                <h6><a href="#" class="btn btn-sm btn-outline-primary"><span class="fas fa-grip-horizontal"></span> See All Products on {{key}}</a></h6>
+                <h6><a href="{% for cat in main_category %}{% if cat.name == key %}{% url 'products:category_detail_with_products' pk=cat.pk slug=cat.slug %}{% endif %}{% endfor %}" class="btn btn-sm btn-outline-primary"><span class="fas fa-grip-horizontal"></span> See All Products on {{key}}</a></h6>
             </div>
         </div>
         {% endfor %}
@@ -111,7 +107,7 @@
                 <hr>
                 <div class="list-group list-group-flush bg-light">
                     {% for cat in category %}
-                    <a class="list-group-item"><span class="fas fa-tag"></span> {{cat.name}}</a>
+                    <a class="list-group-item" href="{% url 'products:category_detail_with_products' pk=cat.pk slug=cat.slug %}" %}"><span class="fas fa-tag"></span> {{cat.name}}</a>
                     {% endfor %}
                 </div>
             </div>    

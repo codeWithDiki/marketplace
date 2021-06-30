@@ -18,8 +18,9 @@ class LandingPage(TemplateView):
 
     def get_context_data(self, **kwargs):
         product_in_category = {}
-
+        main_category = []
         for category in Category.objects.all():
+            main_category.append({"name" : category.name, "pk" : category.id, "slug" : category.slug})
             if settings.DATABASES['default']['ENGINE'] not in ['django.db.backends.sqlite3', 'django.db.backends.oracle']:
                 products = Products.objects.filter(product_category__contains=category.id)[:8]
                 for product in products:
@@ -68,7 +69,8 @@ class LandingPage(TemplateView):
         self.extra_context = {
             "webName" : "Marketplace",
             "category" : Category.objects.all(),
-            "product_in_category" : product_in_category.items()
+            "product_in_category" : product_in_category.items(),
+            "main_category" : main_category
         }
         return super().get_context_data(**kwargs)
 
