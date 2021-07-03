@@ -4,6 +4,7 @@ from .models import *
 from django.http import Http404
 from django.conf import settings
 import json
+from django.shortcuts import render
 
 # View untuk menampilkan produk
 class ProductDetailView(DetailView):
@@ -96,7 +97,6 @@ class CategoryListView(ListView):
         else :
             # menampilkan 404 jika kategori tidak ditemukan
             self.template_name="404.html"
-
     
         
 

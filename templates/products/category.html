@@ -48,13 +48,11 @@
                 </div>
             </div>
             <div class="justify-content-center align-items-center p-3 mt-3 w-100 d-flex">
-                <ul class="pagination shadow">
-                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
+                <div class="pagination shadow">
+                    <div class="page-item {% if page_obj.has_previous == False %}disabled{% endif %}"><a href="{% if page_obj.has_previous == True %}{% url 'products:category_detail_with_products' pk=current_category.pk slug=current_category.slug %}?page={{page_obj.previous_page_number}}{% endif %}" class="page-link"><span class="fas fa-angle-double-left"></span></a></div>
+                    <div class="page-item disabled"><a href="" class="page-link">{{page_obj}}</a></div>
+                    <div class="page-item {% if page_obj.has_next == False %}disabled{% endif %}"><a href="{% if page_obj.has_next == True %}{% url 'products:category_detail_with_products' pk=current_category.pk slug=current_category.slug %}?page={{page_obj.next_page_number}}{% endif %}" class="page-link"><span class="fas fa-angle-double-right"></span></a></div>
+                </div>
             </div>
         </div>
         <div class="col-md-3 p-3">
