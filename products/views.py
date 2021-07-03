@@ -66,11 +66,23 @@ class CategoryListView(ListView):
         self.kwargs = kwargs
         
         is_exists = Category.objects.filter(id=kwargs["pk"]).count() or None
+        
+        
 
+        # check jika kategori tersedia
         if is_exists != None and is_exists > 0:
+            # menambahkan context berupa kategori yang ingin ditampilkan
+            self.extra_context = {
+                "current_category" : Category.objects.get(id=kwargs["pk"]),
+                "categories" : Category.objects.all()
+            }
+
+            # check database driver
             if settings.DATABASES['default']['ENGINE'] not in ['django.db.backends.sqlite3', 'django.db.backends.oracle']:
+                # mengambil data dari model jika driver database bukan oracle atau sqlite 3
                 self.queryset = self.model.objects.filter(product_category__contains=kwargs["pk"])
             else :
+                # mengambil data dari model jika driver database merupakan oracle atau sqlite3
                 queryset = self.model.objects.all()
                 setter = []
                 for products in queryset:
@@ -81,10 +93,8 @@ class CategoryListView(ListView):
 
                 self.queryset = self.model.objects.filter(id__in=setter)
             
-            self.extra_context = {
-                "current_category" : Category.objects.get(id=kwargs["pk"])
-            }
         else :
+            # menampilkan 404 jika kategori tidak ditemukan
             self.template_name="404.html"
 
     

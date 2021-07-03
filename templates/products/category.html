@@ -47,10 +47,35 @@
                 {% endfor %}
                 </div>
             </div>
-                
+            <div class="justify-content-center align-items-center p-3 mt-3 w-100 d-flex">
+                <ul class="pagination shadow">
+                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </div>
         </div>
         <div class="col-md-3 p-3">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero pariatur et suscipit molestias delectus corrupti odio fugit ipsum facilis voluptates sed molestiae similique quibusdam magnam accusantium consequatur natus, numquam sapiente!
+            <div class="card text-dark bg-light">
+                <div class="card-body">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="flex-fill">
+                            <span class="fas fa-tags"></span>
+                        </div>
+                        <div>
+                            <h6>Category</h6>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="list-group list-group-flush bg-light">
+                        {% for cat in categories %}
+                        <a class="list-group-item" href="{% url 'products:category_detail_with_products' pk=cat.pk slug=cat.slug %}" %}"><span class="fas fa-tag"></span> {{cat.name}}</a>
+                        {% endfor %}
+                    </div>
+                </div>    
+            </div>
         </div>
     </div>
 </div>

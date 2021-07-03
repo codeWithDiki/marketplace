@@ -19,6 +19,7 @@ class Products(models.Model):
     product_slugify     = models.SlugField(editable=False)
     product_condition   = models.CharField(blank=True, max_length=50)
     product_type        = models.CharField(blank=True, max_length=50)
+    product_sold_count  = models.IntegerField(default=0)
 
     def __str__(self):
         return "{}".format(self.product_name)
